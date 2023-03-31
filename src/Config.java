@@ -28,7 +28,6 @@ public class Config extends JPanel implements MouseListener, Runnable {
     public Config(Dimension dimension, Graph G) {
         setBackground(Color.black);
         graph = G;
-        //path = p;
 
         width = (int)Math.sqrt(graph.V());
         height = width;
@@ -111,12 +110,7 @@ public class Config extends JPanel implements MouseListener, Runnable {
                 colorGrid[currentX][currentY] = new Color(0, 153, 204);
 
             }
-            //System.out.println(currentNode);
-            //if (currentNodeIndex < path.size()-1){
-            //    currentNodeIndex += 1;
-                //currentNode = path.get(currentNodeIndex);
-
-            //}
+            
             if (path.size() > 0) {
                 currentNode = path.poll();
             }
@@ -148,27 +142,12 @@ public class Config extends JPanel implements MouseListener, Runnable {
 
         if (colorGrid[row][column] == Color.white) {
             colorGrid[row][column] = Color.black;
-            /*
-            LinkedList<Integer> temp = (LinkedList) graph.adjacency(column + row * width).clone();
-            for (int adj : temp) {
-                if (adj != column + row * width) {
-                    graph.removeEdge(column + row * width, adj);
-                }
-            }
-            */
+            
             graph.removeNode(graph, column + row * width);
             //repaint();
         } else if (colorGrid[row][column] == Color.black) {
             colorGrid[row][column] = Color.white;
-            /*
-            List<Integer> temp = (List) graph.adjacency(column + row * width).clone();
-            for (int adj : temp) {
-                if (adj != column + row * width) {
-                    graph.addEdge(column + row * width, adj);
-                }
-            }
-            */
-            //System.out.println(column + row * width);
+            
             graph.restoreNode(graph, column + row * width);
             //repaint();
         } else if (colorGrid[row][column] == Color.green) {
@@ -177,13 +156,12 @@ public class Config extends JPanel implements MouseListener, Runnable {
             path = search.getPath();
 
             currentNodeIndex = 0;
-            //currentNode = path.get(currentNodeIndex);
+            
             if (path == null) {
                 colorGrid[0][0] = Color.red;
             } else {
                 currentNode = path.poll();
-                //currentX = currentNode % 10;
-                //currentY = Math.round(currentNode / 10);
+                
                 startThread();
             }
         } else if (colorGrid[row][column] == Color.red) {
